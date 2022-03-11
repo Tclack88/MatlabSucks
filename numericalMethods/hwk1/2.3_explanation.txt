@@ -1,0 +1,25 @@
+With fixed point iteration, we are taking a general function y(x) = k where k is the "y-value" we are interested in.
+We can then look at the hyperfunction f(x) = y(x) - k and numerically estimating where f(x) = 0 (it will ALWAYS be zero as we are subtracting that constant k to one side)
+
+In this specific case, k = -1 and y(x) =sin(2x) + (1/3) x^2 - 4
+y(x) = -1 so f(x) = y(x) + 1 or
+
+f(x) = sin(2x) + (1/3) x^2 - 3
+
+The plot below is of y(x). f(x) would be the same thing shifted up by 1. In both cases, we would see two points of interest (crossing t(x) = -1 or equivalently f(x) = 0).
+
+With f(x), we can rearrange for some x such that x equals some function of x, namely x = g(x)
+(note, there are usually multiple possibilities with which to proceed. It's only important to check the convergence criteria which states that for some point xo we're interested in, provided |g(xo)| < 1, we are guaranteed a convergence, otherwise it MAY converge, it is just not a guarantee)
+with this in mind, we can proceed with the estimation
+
+
+The logic is pretty straightforward. If we knew exactly what xo was, the equation x = g(x) would be true, i.e. the left and right side would equate. If we chose a value close to xo and put it into g(x), then the corresponding g(xo) would be very close to xo. Iterating and placing the output of this would approach the actual value
+x1 = g(xo)
+x2 = g(x1)
+x3 = g(x2)
+    .
+    .
+x_(n+1) = g(xn)
+
+givenn f(x) = sin(2x) + (1/3) x^2 - 3, x = sqrt(3(3+sin(2x))) =g(x) looks like a good choice.  The upper bound looks to be about 3.1, so we can choose xo = 3.1
+x1 = sqrt(3(3+sin(2*3.1))) = 2.958

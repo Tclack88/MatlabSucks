@@ -8,7 +8,7 @@
 x_range = -2:.1:2; % Save computation. reduce the gradations of y
 y_range = []; % empty array to be appended to
 for x=x_range
-	yi = -abs(x) % It's somewhere between -3 and 0 and negative
+	yi = -abs(x); % It's somewhere between -3 and 0 and negative
 	y = Newton(@H, @dH, x, yi, .0001);
 	y_range = [y_range y];
 end	
@@ -18,7 +18,7 @@ xlabel('x');
 ylabel('y');
 xlim([-3 3]);
 ylim([-3 3]);
-title("sea level as a function of position (calculated)")
+title("calculated x,y location of sea level at height 35")
 
 % The plot we see is consistent with the tools created by matlab's
 % built-in tools

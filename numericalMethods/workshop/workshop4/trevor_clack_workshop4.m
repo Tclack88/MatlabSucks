@@ -60,17 +60,18 @@ Uc = [U answers]; % augmented matrix to do back substitution
 % Here's the forward sub I tried for a guassian elimination in workshop 3
 forward_sol = forward_sub(U,back_sol)
 % This agrees with the built-in tools
-U\(L\c)
+confirmation = U\(L\c)
 
 
+% test with a different solution set
 c2 = [2;6;7];
 
+back_sol2 = back_sub(L, c2);
 
+forward_sol2 = forward_sub(U, back_sol2)
+confirmation = U\(L\c2) %check output with built-in tool
 
-
-
-
-
+%%%%%%%%%%%%%%%% back and forward substitution functions %%%%%%%%%%%%%%
 function answer = back_sub(L,c)
 	Lc = [L c];
 	m = size(L,[1]);
@@ -107,7 +108,7 @@ function answer=forward_sub(U,c)
 	answer = fliplr(answers_reversed)';
 end
 
-% Scratch Work. Ignore below
+%%%%%%%%% Scratch Work. Ignore below %%%%%%%%%%%
 
 % L(:,1) = A(:,1);
 % [A L U]
@@ -115,7 +116,7 @@ end
 % [nrows ncols] = size(A)
 % for i = 1:nrows
 % 	for j = i+1:nrows
-% 		U(i:j) = (A(i,j) - L(
+% 		U(i:j) = (A(i,j) - L(??))
 % end
 % 
 % A(1,2) = L(1,:)*U(:,2) = L(1,1)*U(1,2) %+ L(1,2)*U(2,2) + L(1,3)*U(3,2)

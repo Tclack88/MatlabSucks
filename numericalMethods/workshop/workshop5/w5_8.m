@@ -31,6 +31,7 @@ plot_error(E_fp);
 plot_error(E_fpi);
 plot_error(E_nr);
 plot_error(E_s);
+title('a comparison of error convergences by method')
 legend('bisection', 'false position', 'fixed point iteration', 'newton raphson', 'secant')
 hold off
 
@@ -46,6 +47,7 @@ p_nr = poly_plot_error(E_nr)
 hold on
 p_s = poly_plot_error(E_s)
 hold off
+title('from polynomial fitting')
 legend('newton raphson', 'secent')
 
 % newton-raphson method vals:
@@ -55,6 +57,17 @@ p_nr(2)
 % secant method vals:
 p_s(1)
 p_s(2)
+
+% Compare to power regression (given)
+
+figure
+plot_power_regression_error(E_nr)
+hold on
+plot_power_regression_error(E_s)
+hold off
+title('power regression')
+legend('newton raphson', 'secent')
+
 
 
 %%%%%%%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%%%%
@@ -74,3 +87,43 @@ function p =  poly_plot_error(err);
 	p = polyval(Ei, Ei_1,1);
 	plot(log(Ei), log(Ei_1));
 end
+
+function plot_power_regression_error(err);
+	Ei = err(1:end-1);
+	Ei_1 = err(2:end);
+	plot(Ei, Ei_1)
+end
+
+function [a, out] = power_regression(x,y,a0)
+	% provided
+	tol = 10^-12;
+	a=a0;
+
+	d = [sum(2*a(1)*x.^(2*a(2)) - 2*(x.^a(2)).*y);
+		sum(2*a(1)^2*log(x).*(x.^(2*a(2)))-2*a(1)*log(x).*x.^(a(2)).*y)];
+
+	i = 1;
+
+	iter_max=500;
+
+	while max(abs(d))>tol && i<iter_max
+		H=[sum(2*x.^(2*a(2))), sum(2*a(1)*x.^(2*a(2)).*log(x)-2*x.^(a(2)).*(-a(1)*x.^(a(2))+y).*log(x));
+			sum(2*a(1)*x.^(2*a(2)).*log(x)-2*x.^(a(2)).*(-a(1)*x.^(a(2))+y).*log(x)), sum(2*a(1)^2*x.^(2*a(2)).*log(x).^2-2*a(1)*x.^(a(2)).*(-a(1)*x.^(a(2))+y).*log(x).^2)];
+		da = H\(-d);
+		a = a+da;
+		d = [sum(2*a(1)*x.^(2*a(2))-2*x.^a(2).*y);
+			sum(2*a(1)^2*log(x).*(x.^(2*a(2)))-2*a(1)*log(x).*x.^(a(2)).*y)];
+		i = i+1;
+	end
+
+	if i >= iter_max
+		out = 0;
+	else
+		out = 1;
+	end
+end
+
+
+
+
+

@@ -15,7 +15,7 @@ for i=1:length(o)
 	plot(B, f_out)
 end
 hold off
-title('roots (zeros) of sonic boom cone by wedge angle')
+title('roots (zeros) of sonic boom cone by wedge angle at Mach 1.4')
 legend('4 degrees', '8 degrees', '12 degrees')
 
 
@@ -30,7 +30,7 @@ for i=1:length(o)
 	plot(B, f_out);
 end
 hold off
-title('roots (zeros) of sonic boom cone by wedge angle')
+title('roots (zeros) of sonic boom cone by wedge angle at Mach 4')
 legend('20 degrees', '35 degrees', '50 degrees')
 
 

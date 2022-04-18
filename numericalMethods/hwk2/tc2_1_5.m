@@ -1,3 +1,16 @@
+% We found that at M = 4, omax occurs around o = 66. Let's now try to find
+% Bl and Bu as we keep M =4 but vary theta o from 0 to omax
+% We saw previosly that at o=0, Bl=14.5 and Bu=90
+% as we varied o from 20 -> 35 -> 50, these values went to -.28, -.58, -1
+% respectively, which is about a drop of .015 per degree. This will suffice
+% as a starting guess. Similarly for Bl, 20 -> 35 -> 50 goes to-.36, -.67, -1.17
+% A good initial guess may be drop of  -.018 per degree
+
+M = 4
+o = linspace(0,66)
+
+
+
 % Applying Root finding to the cone of a sonic boom
 % the equation relating wedge angle o to oblique angle B, 
 % mach number M and specific heat ratio a is given by:
@@ -23,7 +36,6 @@ legend('4 degrees', '8 degrees', '12 degrees')
 % Now let's plot f(B) vs B for these next values:
 M = 4;
 o = [20,35,50]; % degrees)
-B = linspace(asind(1/M),90); % a range of B for plotting
 figure
 hold on
 for i=1:length(o)

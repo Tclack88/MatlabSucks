@@ -1,0 +1,47 @@
+Experiment 1
+
+Machine number: 2
+metal length: 17.80
+metal diameter (outer): 11.93
+ceramic length: 24.93
+ceramic diameter1a (inner): 4.05
+ceramic diameter1b (inner): 4.08
+ceramic diameter2 (outer): 11.45
+polymer length: 40.74
+polymer diameter (outer): 21.06
+
+Prediction
+metal:
+polymer:
+ceramic:
+
+Observed Behavior
+metal:
+polymer:
+ceramic:
+
+
+
+
+Experiment 2
+
+     P1 = 6.4N    P2 = 2.2N
+A-----B-----C-----D-----E
+^           ^     \  l  /     l = 73mm
+
+\            L          /     L = 292mm
+
+ ____
+|____|  1mm      Material is Aluminum with E = 69GPa
+ 20mm
+
+
+-Verify Weights with scales:
+P1 = 6.4N? - 652.9
+p2 = 2.2N? - 224.5 g
+
+Take photo at 300 mm away with:
+-No loading
+-Only P1
+-Only P2
+-Both P1 and P2

@@ -1,7 +1,7 @@
 % We found that at M = 4, omax occurs around o = 66. Let's now try to find
 % Bl and Bu as we keep M =4 but vary theta o from 0 to omax (approx 37)
 
-M = 4
+M = 4;
 o = linspace(0,39); % saw 37 as initial approximation where o was zero. Here
 % I have slowly dialed it up to find a closer value where they meet
 
@@ -33,7 +33,7 @@ end
 plot(o(2:end-1),BLs, o(2:end-1),BUs)
 xlabel('theta (degrees)')
 ylabel('Beta (degrees)')
-title('The value for BL and BU for different thetas')
+title('The value for BL and BU for different thetas for M=4')
 legend('BL', 'BU')
 
 
@@ -58,7 +58,6 @@ function x_r = bisection(f, M, o, x_l, x_u)
 	
 	x_r=(x_l+x_u)/2;
 	n = 0;
-	f(x_r, M, o)
 	while abs(f(x_r, M, o))>eps
 	    f_l=f(x_l, M, o);
 	    f_u=f(x_u, M, o);
@@ -69,8 +68,6 @@ function x_r = bisection(f, M, o, x_l, x_u)
 	        x_l= x_r;
 	    end
 	    x_r=(x_l+x_u)/2;
-	    x_r
-	    f(x_r,M,o)
 	    n = n + 1; % augment to count
 	    if n == maxiter
 		    break

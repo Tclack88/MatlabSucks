@@ -1,28 +1,31 @@
 % Interpolation for a car accelerating - compare lagrange to cubic spline
 
-% t = [0 .5 1 2 3 8]; % time (s)
-% v = [0 11.1 13.2 14.8 16.2 16.1]; % velocity (m/s)
-% 
-% 
-% x_range = linspace(0,8); % domain for plotting
-% 
-% 
-% % cubic spline interpolation
-% figure
-% [a b c d] = cubic_spline(t,v);
-% spline_plot(a,b,c,d,x_range,t,v)
-% hold on
-% 
-% % lagrange polynomial interpolation
-% lagrange_plot(t, v, x_range)
-% title('Cubic spline plot vs Lagrange polynomial interpolation')
-% xlabel('time (s)')
-% ylabel('velocity (m/s)')
-% hold off
-% legend('known points','cubic spline', 'Lagrange polynomial', 'Location', 'southwest')
-% 
+t = [0 .5 1 2 3 8]; % time (s)
+v = [0 11.1 13.2 14.8 16.2 16.1]; % velocity (m/s)
 
-disp('see tc2_4_2.m to see the evaluation of the specific example')
+
+x_range = linspace(0,8); % domain for plotting
+
+
+% cubic spline interpolation
+figure
+[a b c d] = cubic_spline(t,v);
+spline_plot(a,b,c,d,x_range,t,v)
+hold on
+
+% lagrange polynomial interpolation
+lagrange_plot(t, v, x_range)
+title('Cubic spline plot vs Lagrange polynomial interpolation')
+xlabel('time (s)')
+ylabel('velocity (m/s)')
+hold off
+legend('known points','cubic spline', 'Lagrange polynomial', 'Location', 'southwest')
+
+
+disp('Lagrange interpolating polynomials suffers from Runge''s phenomenom')
+disp('(waviness between the points being interpolated.')
+disp('With cubic spline, by ensuring the splines left and right of a point')
+disp('share the same 2nd derivative, we fix this and get a better fit')
 
 
 %%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%%%%%%%

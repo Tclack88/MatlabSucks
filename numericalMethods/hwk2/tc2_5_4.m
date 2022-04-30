@@ -1,12 +1,12 @@
 % Multiple Integration using Simpson's rule and a meshgrid
 
-ax = 0; % left endpoint for x
-bx = 5; % right endpoint for x
+ax = -10; % left endpoint for x
+bx = 10; % right endpoint for x
 n = 10; % number of intervals
 x = linspace(ax,bx,n);
 
-ay = -3; % left endpoint for y
-by = 3; % right endpoint for y
+ay = -15; % left endpoint for y
+by = 15; % right endpoint for y
 y = linspace(ay,by,n);
 
 [X, Y] = meshgrid(x,y);
@@ -30,7 +30,7 @@ for i = 1:length(ns);
 	a = simpsonsy(g, ay, by, n);
 	my_vals(i) = a;
 end
-h_line = 1456*(ones(size(ns)));
+h_line = 251.2*(ones(size(ns)));
 plot(ns,my_vals,ns,h_line)
 legend('error from my integral','actual value')
 title('calculated value as n increases')
@@ -42,7 +42,7 @@ ylabel('calculated value')
 
 function ret = f(X,Y)
 	% the function to be evaluated by simpson's rule,
-	ret = X.^2 - 2*Y.^2 + X.*Y.^4;
+	ret = 4*exp(-((X/4)^2+(Y/5)^2));
 end
 
 

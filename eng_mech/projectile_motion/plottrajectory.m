@@ -2,6 +2,7 @@ calib_frame=input('Enter the frame number for calibration: ');
 image(read(obj,calib_frame))
 disp('Click on up-left and down-right corners on the calibration paper and press Enter.'); 
 [x_pix,y_pix]=getpts();
+%[x_pix,y_pix]=getpts(get(imshow('marble.mov'),'Parent'))
 phys_X=input('Enter the horizontal physical distance between two cornenrs in cm:  ');
 phys_Y=input('Enter the verticalal physical distance between two cornenrs in cm:  ');
 

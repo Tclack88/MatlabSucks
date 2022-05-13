@@ -1,5 +1,5 @@
 marble:
-frames 361 to 387
+frames 361 to 383 (387 but dissapears)
 
 plastic
 frames 252 to 279

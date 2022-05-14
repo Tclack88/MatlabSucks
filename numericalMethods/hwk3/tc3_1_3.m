@@ -1,4 +1,4 @@
-% Thomas algorithm to compute Boundary value ODE of y'' + y' - 6y = 15sin(12x)
+    % Thomas algorithm to compute Boundary value ODE of y'' + y' - 6y = 15sin(12x)
 
 deltas = [.2 .1 .01];
 left = -1; right =2;
@@ -9,12 +9,17 @@ for delta = deltas;
 	D1 = D1Matrix(xp);
 	D2 = D2Matrix(xp);
 	b = 15*sin(12*xp);
-	%b(1) = left;
-	%b(end) = right;
+	b(1) = left;
+	b(end) = right;
 	b = b'; %transpose for correct shape
 	D = D2 + D1 - D0;
-	size(b);
-	size(D);
+	% overwrite first and last row with initial condition
+	D(1) = 1;
+	D(1,2) = 0;
+	D(1,3) = 0;
+	D(end,end) = 1;
+	D(end,end-1) = 0;
+	D(end,end-2) = 0;
 	sol = linsolve(D,b);
 	plot(xp,sol)
 end
@@ -41,7 +46,7 @@ end
 function D = D1Matrix(xp)
 	N = length(xp);
         D = zeros(N);
-        D(:,1) = 1;
+        D(:,1) = -1;
         D(:,2) = 0;
         D(:,3) = 1;
         for i = 3:N-1;

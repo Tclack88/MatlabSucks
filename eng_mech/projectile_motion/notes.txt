@@ -1,5 +1,18 @@
 marble:
-frames 361 to 383 (387 but dissapears)
+reccomend frames 361 to 383 (387 but dissapears)
+actual: 361 - 387
 
 plastic
-frames 252 to 279
+reccomend frames 252 to 279
+actual: 253 - 279
+
+
+launch:
+total height: 19.6cm
+hypoteneuse:  26cm
+
+relax length: 10.6cm
+
+marble stretch to 15cm
+plastic stretch to 14cm
+

@@ -1,32 +1,35 @@
-% Thomas algorithm to compute Boundary value ODE of y'' + y' - 6y = 15sin(12x)
-
-deltas = [.2 .1 .01];
-left=0; right=1;
-a = 0; b = 1;
-ya = -1; yb = 2
+delta = 1.3;
+l = 130;
+E = 3.1e7;
+S = 1100;
+I = 630;
+xs = [0:delta:l];
+N = length(xs);
+qs = [10 15 25];
 
 hold on
-for delta = deltas;
-	xp = [a:delta:b];
-	N = length(xp);
-	A = SetMatrix(N,xp);
-	y = 15*sin(12*xp);
-	y(1) = ya;
-	y(end) = yb;
-	sol = thomas(A,y);
-	plot(xp,sol)
+for q = qs;
+	Q = q/(2*E*I)*xs.*(xs-l);
+	Q = Q'; % transpose fit matrix
+	A = SetMatrix(N,xs);
+	sol = thomas(A,Q);
+	plot(xs,sol);
 end
 hold off
-title('ODE plot of y''''+y''-6y = 15sin(12x) at different intervals');
-legendStrings = "delta:" + string(deltas);
-legend(legendStrings,'location','northwest')
+title('Beam deflection ODE solution (y'''' = S/(EI) y + q/(2EI)x(x-l))')
+legendStrings = "q = " + string(qs);
+legend(legendStrings)
 
+function D = SetMatrix(N,xs)
+	% specific parameters
+	E = 3.1e7;
+	S = 1100;
+	I = 630;
 
-function D = SetMatrix(N,xp)
-        delta = xp(2) - xp(1); % same as interval linspace(a,b,N+1)
-	a = 1/delta^2 - 1/(2*delta);
-	B = -2/delta^2 - 6;
-	y = 1/delta^2 + 1/(2*delta);
+        delta = xs(2) - xs(1); % same as interval linspace(a,b,N+1)
+        a = 1/delta^2;
+        B = -2/delta^2 - S/(E*I);
+        y = 1/delta^2;
 
         D = zeros(N);
         D(2:end-1,1) = a;
@@ -35,8 +38,8 @@ function D = SetMatrix(N,xp)
         for i = 3:N-1;
                 D(i,:) = circshift(D(i,:),i-2);
         end
-	D(1) = 1;
-	D(end) = 1;
+        D(1) = 1;
+        D(end) = 1;
 
 end
 
@@ -72,4 +75,5 @@ function x =  thomas(A,b)
                 x(i) = (Q_s(i) - y(i)*x(i+1))/B_s(i);
         end
 end
+
 

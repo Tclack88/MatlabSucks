@@ -19,6 +19,7 @@ err
 
 
 function D = DerivMatrix(x,n)
+	% Spectral differentiation
         % Find D matrix (given in lecture)
         D = zeros(n+1,n+1);
         for i = 1:n+1;
@@ -52,4 +53,3 @@ function D = DerivMatrix(x,n)
                 end
         end
 end
-~

@@ -20,6 +20,27 @@ title('Beam deflection ODE solution (y'''' = S/(EI) y + q/(2EI)x(x-l))')
 legendStrings = "q = " + string(qs);
 legend(legendStrings)
 
+format short
+deltas = [1 .1 .01];
+% Compare the mean squared difference between the max value of the original
+% (1.3 inch) gradations to some smaller choices
+for delta = deltas
+	xs = [0:delta:l];
+	N = length(xs);
+	Q = q/(2*E*I)*xs.*(xs-l);
+	Q = Q'; % transpose fit matrix
+	A = SetMatrix(N,xs);
+	sol_new = thomas(A,Q);
+	err = rms(max(sol),max(sol_new));
+	sprintf('using delta = %.2f in. to 1.3 in. gradations is: %.10f %% difference, so 1.3 is a very good choice', delta,err)
+end
+
+function err = rms(a1, a2)
+        % estimate error with root mean square between 2 arrays
+        err = sqrt(sum((abs(a1 - a2)).^2)/length(a1));
+end
+
+
 function D = SetMatrix(N,xs)
 	% specific parameters
 	E = 3.1e7;

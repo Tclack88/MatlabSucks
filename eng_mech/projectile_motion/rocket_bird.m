@@ -22,7 +22,7 @@ rx(i+1) = rx(i)+vx(i)*dt;
 ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 i = i+1;
 end
-plot(t,ry)
+plot(rx,ry)
 title('no air resistance')
 
 clear;
@@ -51,7 +51,7 @@ ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 i = i+1;
 end
 figure
-plot(t,ry)
+plot(rx,ry)
 title('with air resistance')
 
 % clear;
@@ -140,10 +140,10 @@ i = i+1;
 end
 figure
 %plot(t1,ry1,t,ry)
-plot(t,ry)
-title('Trajectory with mass ejection and drag')
-xlabel('horizontal distance (m)')
-ylabel('height (m)')
+plot(rx,ry)
+%title('Trajectory with mass ejection and drag')
+xlabel('horizontal distance (cm)')
+ylabel('height (cm)')
 %legend('version 1', 'version 2')
 
 %%%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%

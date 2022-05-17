@@ -74,7 +74,19 @@ plot(rx, ry)
 plot(rx1, ry1)
 plot(rx2, ry2)
 plot(rx3, ry3)
+xlabel('x (cm)')
+ylabel('y (cm)')
 hold off
+
+% Energy for split
+KE0 = KE(m,vx0);
+KE1 = KE(m/3,v1);
+KE2 = KE(m/3,v2);
+KE3 = KE(m/3,v3);
+KEf = KE1 + KE2 + KE3;
+delta_KE = KEf - KE0;
+disp('Energy required for split:')
+delta_KE
 
 function [rx, ry, vx, vy, t] = projectile(dt,v0,o)
 	t(1) = 0;
@@ -110,4 +122,8 @@ function [rx, ry, vx, vy, t] = projectile2(t0,x0,y0,dt,v0,o)
 		ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 		i = i+1;
 	end
+end
+
+function E = KE(m,v)
+	E = 1/2*m*v^2;
 end

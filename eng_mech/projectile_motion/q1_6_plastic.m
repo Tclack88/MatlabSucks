@@ -1,7 +1,7 @@
 clc;
 clear;
 
-%%% Marble %%%
+%%% Plastic %%%
 % get data from fig
 open('plastic-XY.fig');
 a = get(gca,'Children');

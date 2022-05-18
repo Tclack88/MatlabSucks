@@ -1,11 +1,12 @@
 clc;
 clear;
 m = 1.2;
-v0 = 25;
-o = 45;
+m_i = 1.2;
+v0 = 10;
+o = 50;
 
 
-%%%%%%% no drag %%%%%%%%
+%%%%%%% original no drag %%%%%%%%
 dt = .001;
 t(1) = 0;
 vx(1) = v0*cosd(o);
@@ -22,17 +23,15 @@ rx(i+1) = rx(i)+vx(i)*dt;
 ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 i = i+1;
 end
-plot(rx,ry)
-title('no air resistance')
+rx1 = rx;
+ry1 = ry;
 
-clear;
-clc;
-m = 1.2;
-v0 = 25;
-o = 45;
-%%%%%%%% with air resistance %%%%%%%%
+
+
+%%%%%%%% original with air resistance %%%%%%%%
 dt = 0.001;
 % initial conditions
+clear t vx vy rx ry;
 t(1) = 0;
 vx(1) = v0*cosd(o);
 vy(1) = v0*sind(o);
@@ -50,9 +49,11 @@ rx(i+1) = rx(i)+vx(i)*dt+ax*0.5*dt*dt;
 ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 i = i+1;
 end
-figure
-plot(rx,ry)
-title('with air resistance')
+rx2 = rx;
+ry2 = ry;
+% figure
+% plot(rx,ry)
+% title('with air resistance')
 
 % clear;
 % clc;
@@ -99,12 +100,7 @@ title('with air resistance')
 %ry1 = ry
 
 %%%%%% test with mass ejection 2 %%%%%%%%%%%%%
-clear;
-clc;
-m = 1.2;
-m_i = 1.2;
-v0 = 10;
-o = 50;
+clear t vx vy rx ry;
 
 dt = 0.001;
 % initial conditions
@@ -138,17 +134,19 @@ rx(i+1) = rx(i)+vx(i)*dt+ax*0.5*dt*dt;
 ry(i+1) = ry(i)+vy(i)*dt+ay*0.5*dt*dt;
 i = i+1;
 end
+rx3 = rx;
+ry3 = ry;
 figure
 %plot(t1,ry1,t,ry)
-plot(rx,ry)
-%title('Trajectory with mass ejection and drag')
-xlabel('horizontal distance (cm)')
-ylabel('height (cm)')
-%legend('version 1', 'version 2')
+plot(rx1, ry1, rx3,ry3) % original (no drag) + rocket bird)
+title('Trajectory comparing original to mass ejection and drag')
+xlabel('x (cm)')
+ylabel('y (cm)')
+legend('original', 'rocket bird')
 
 %%%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%
 
-function [ax, ay] = drag(vx_i,vy_i,m_i)
+function [ax, ay] = drag(vx_i,vy_i,m)
 	g = 9.81; % gravitational acceleration (always in -y direction)
 	C = 1; % Drag coefficient
 	p = 1.2; % air density (kg/m^3)
@@ -159,8 +157,8 @@ function [ax, ay] = drag(vx_i,vy_i,m_i)
 	vi = sqrt(vx_i^2 + vy_i^2); %initial velocity
 	d = 1/2*C*A*p*vi; % drag proportional to v
 
-	ax = -d/m_i*vx_i; % negative counters direction. *v to get v^2
-	ay = -g - d/m_i*vy_i; % negative counters direction. *v to get v^2
+	ax = -d/m*vx_i; % negative counters direction. *v to get v^2
+	ay = -g - d/m*vy_i; % negative counters direction. *v to get v^2
 end
 
 

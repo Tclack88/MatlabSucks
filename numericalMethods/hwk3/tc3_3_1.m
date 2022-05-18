@@ -19,23 +19,24 @@ plot(t,x(:,2))
 hold on
 plot(tmat,xmat(:,2))
 title("RK2 for system of ODEs x'' = 50Vcos(o) + 6Asin(x/10) - 60x'")
-legend('RK2 approximation','ode23 - Matlab builtin solver','location','northwest')
+legend('RK2 approximation','ode23 - Matlab builtin solver','location','southeast')
 
-disp('the matlab built-in matches very well with the RK2 solution, the chosen delta t of .1 is a good choice')
+disp('the matlab built-in matches very well with the RK2 solution, so in a handy-wavy way, the chosen delta t of .1 is a good choice')
 
 % The equation can be rearranged as:
-% x'' = 1/2Vcos(o) + 3/50Asin(x/100) - 3/5x'
+% x'' = 1/2Vcos(o) + 3/50Asin(x/10) - 3/5x'
 % Here, we can reduce to a system of equations:
-% u = x  u'=v
-% v = x' v'= 1/2Vcos(o) + 3/50Asin(u/100) - 3/5v
-%   0          1
-% -3/5   1/2Vcos(o) + 3/50Asin(u/100) 
+% x1 = x      x2 = x'
+% so we have:
+% x1' = x2
+% x2' = 1/2Vcos(o) + 3/50Asin(x1/10) - 3/5(x2)
 
 function vec = f(t,x)
 	% set constants
 	V = 14;
 	o = 30;
 	A = 3;
-	% system of equations
-	vec = [x(2); (1/2*V*cosd(o) + 3/50*A*sin(x(1)/100))];
+	% Return derivatices in vector:
+	% [x1' x2']
+	vec = [x(2); (1/2*V*cosd(o) + 3/50*A*sin(x(1)/10)) - 3/5*x(2) ];
 end

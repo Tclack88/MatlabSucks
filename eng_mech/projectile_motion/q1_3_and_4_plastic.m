@@ -1,14 +1,14 @@
 clc;
 clear;
 
-%%% Marble %%%
+%%% Plastic %%%
 % get data from fig
-open('marble-XY2.fig');
+open('plastic-XY.fig');
 a = get(gca,'Children');
 x_real = get(a, 'XData');
 y_real = get(a, 'YData');
-x_real = x_real(1:end-1);
-y_real = y_real(1:end-1);
+%x_real = x_real(1:end-1);
+%y_real = y_real(1:end-1);
 x_real = x_real/100; % convert cm to m
 y_real = y_real/100; % convert cm to m
 close;
@@ -17,15 +17,15 @@ rise = y_real(2) - y_real(1);
 run = x_real(2) - x_real(1);
 o = atand(rise/run); % measure launch angle (doesn't match well with slant)
 % get launch velocity
-disp('actual launch angle:')
+disp('actual launch angle')
 o
 delta_t = 1/60; % based on frame rate 60
 delta_d = sqrt(rise^2 + run^2); %distance traveled from initial launch
 v0 = delta_d/delta_t; %cm to m
 
 % set variables
-m = .0051; % 5.1g to kg
-d = .015; % 1.5cm diameter to m
+m = .0002; % .2g to kg
+d = .023; % 2.3cm diameter to m
 A = pi*(d/2)^2; %area
 
 %%%%%%% Theoretical (no drag) %%%%%%%%
@@ -75,20 +75,20 @@ end
 rx2 = 100*rx; % save for plotting. convert to cm
 ry2 = 100*ry;
 
-% Plot for 1.3 marble compared to no-drag
+% Plot for 1.3 platic compared to no-drag
 figure
 plot(rx1,ry1,rx2,ry2,100*x_real,100*y_real) % convert real to cm
 legend('theoretical - no drag','theoretical - drag', 'experimental','location','southwest')
 xlabel('distance (cm)')
 ylabel('height (cm)')
-title('marble projectile - comparing model to experiment')
+title('plastic projectile - comparing model to experiment')
 
 % figure
 % plot(rx2,ry2,100*x_real,100*y_real) % convert real to cm
 % legend('theoretical - with drag', 'experimental','location','southwest')
 % xlabel('distance (cm)')
 % ylabel('height (cm)')
-% title('marble projectile - comparing model to experiment')
+% title('plastic projectile - comparing model to experiment')
 
 
 %%%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%

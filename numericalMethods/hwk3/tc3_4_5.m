@@ -1,33 +1,62 @@
 % Initial value problem. Sailboat in wavy waters with Runga Kutta
 % function is 100 x'' = 50Vcos(o) + 6Asin(x/10) - 60x'
 
-
-dt = .1;
+dt = .1
 t = [0:dt:20];
-N = 40;
-x = linspace(0,20,N);
-dx = x(2) - x(1)
+Ns = [100 200 300 500];
+for N = Ns
+	x = linspace(0,20,N);
+	dx = x(2) - x(1);
+	
+	O = zeros(length(t)-1,N);
+	O(1,:) = initiate_phis(x);
+	
+	
+	for n=1:length(t)-1
+		k1=f(t(n), O(n,:),dx)';
+		k2=f(t(n)+dt,O(n,:)+dt*k1,dx)';
+		O(n+1,:)=O(n,:) + (k1/2+k2/2)*dt;
+	end;
+	
+	% plot phis for when t = 0,5,10,15
+	times = [0 5 10 15];
+	figure
+	for time = times
+		t_i = time/dt + 1; %index with our phis
+		hold on
+		plot(x,O(t_i,:))
+		xlabel('x')
+		ylabel('phi')
+		title('Phi at x for divisions with N=',N)
+	
+	end
+	hold off
+end
 
+disp('dt=.1 works for N=100 and smaller terms')
+disp('But the plot begins to get rather gross for N=500 (and part of N=300)')
+disp('So if we make the divisions smaller, it should give a nicer plot')
+
+% Try again with N=500 and dt=.01
+dt= .01
+t = [0:dt:20];
+N = 500
+x = linspace(0,20,N);
+dx = x(2) - x(1);
 O = zeros(length(t)-1,N);
 O(1,:) = initiate_phis(x);
-
 
 for n=1:length(t)-1
 	k1=f(t(n), O(n,:),dx)';
 	k2=f(t(n)+dt,O(n,:)+dt*k1,dx)';
 	O(n+1,:)=O(n,:) + (k1/2+k2/2)*dt;
 end;
-
-% plot phis for when t = 0,5,10,15
-times = [0 5 10 15];
-for time = times
-	t_i = time/dt + 1; %index with our phis
-	hold on
-	plot(x,O(t_i,:))
-	xlabel('x')
-	ylabel('phi')
-
-end
+figure
+t_i = time/dt + 1; %index with our phis
+plot(x,O(t_i,:))
+xlabel('x')
+ylabel('phi')
+title('Phi at x for divisions with N=500, dt=.01')
 
 function vec = f(t,O,dx)
 	% set constants

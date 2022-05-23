@@ -13,8 +13,10 @@ for delta = deltas;
 	y = 15*sin(12*xp);
 	y(1) = ya;
 	y(end) = yb;
+	size(A)
 	sol = thomas(A,y);
 	plot(xp,sol)
+    y
 end
 hold off
 title('ODE plot of y''''+y''-6y = 15sin(12x) at different intervals');

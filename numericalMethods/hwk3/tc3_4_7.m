@@ -10,7 +10,8 @@ N=40;
 N_1 = N-1; % N-1, GLL nodes gives one more point than the number passed in
 %x = linspace(0,20,N);
 x = GLL_nodes(N_1);
-x = (b-a)/2*x + (b+a)/2; % Adjust Gauss lobatto beyond the -1 +1 region
+[w1, x1] = gauss_legendre_points(N);
+x = (b-a)/2*x1 + (b+a)/2; % Adjust Gauss lobatto beyond the -1 +1 region
 D = DerivMatrix(x,N_1);
 
 O = zeros(length(t)-1,N);
@@ -53,6 +54,12 @@ function O = initiate_phis(x)
 	% returns starting phis
 	O = exp(-((x-3)/.5).^2); % from BC
 	O(1) = 0; % from BC
+end
+
+function [w,x] = gauss_legendre_points(k)
+    syms t
+    x = double(vpasolve(legendreP(k,t) == 0));
+    w = 2*(1-x.^2)./((k+1)^2.*(legendreP(k+1,x).^2));
 end
 
 function xp = GLL_nodes(N)

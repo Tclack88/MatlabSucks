@@ -1,39 +1,44 @@
 % Initial value problem. Sailboat in wavy waters with Runga Kutta
 % function is 100 x'' = 50Vcos(o) + 6Asin(x/10) - 60x'
 
+clc
+clear
+
 N = 40;
 x = linspace(0,20,N);
 dx = x(2) - x(1)
 
-dts = [.01 .05 .1 .2 .5];
+dts = [.01 .05 .1 .2 .5 1];
 figure
 hold on
-for dt = dts
+for dt = dts;
 	O = initiate_phis(x);
 	evals = get_eig_vals(O,dx)';
-	X = real(evals);
-	Y = imag(evals);
-	for x_val = X
-		if -2 > x_val > 0
-			disp('outside of stablility region')
-			dt
-			x_val
-		end
-	end
+	X = real(evals)*dt;
+	Y = imag(evals)*dt;
 	plot(X,Y,'o');
 end
+legend_strings = "dt: " + string(dts);
+legend(legend_strings,'location','southwest')
+title('stablility plots for various dt time steps with RK2')
 
-% plot phis for when t = 0,5,10,15
-% times = [0 5 10 15];
-% for time = times
-% 	t_i = time/dt + 1; %index with our phis
-% 	plot(x,O(t_i,:))
-% 	xlabel('x')
-% 	ylabel('phi')
-% 
-% end
-% The equation we are dealing with:
-% dO/dt + UdO/dx = v*d2O/dx2"
+
+% add stability plot over this
+relamdt=-3:0.1:1;
+imlamdt=-2:0.1:2;
+[RElamdt,IMlamdt]=meshgrid(relamdt,imlamdt);
+axis square;
+lamdt=RElamdt+i*IMlamdt;
+sig=1+lamdt+lamdt.^2/2;
+contour_levels=[1 0 0 0];
+contour(RElamdt,IMlamdt,abs(sig),contour_levels,'linewidth',4);
+xlabel('Re \lambda \Delta t');
+ylabel('Im \lambda \Delta t');
+hold on;
+
+
+disp('we can see certain eigenvalues vall outside of the region of stability')
+
 
 function evals = get_eig_vals(O,dx)
 	% set constants
@@ -57,7 +62,7 @@ function L = L_mat(O,dx,U,v)
 	M1(1,2) = 1;
 	M1(end, end-1) = -2;
 	M1(end,end) = 2;
-	M1 = -U/(2*dx);
+	M1 = -U/(2*dx)*M1;
 	% Make M2
 	M2 = zeros(N);
 	M2(2:end,1) = 1;

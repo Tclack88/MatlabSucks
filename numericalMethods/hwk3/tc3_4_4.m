@@ -38,6 +38,8 @@ hold on;
 
 
 disp('we can see certain eigenvalues vall outside of the region of stability')
+disp('Some eigenvalues for dt=1 are outside the range of stability')
+disp('this makes this division unsuitable for stabile solutions')
 
 
 function evals = get_eig_vals(O,dx)

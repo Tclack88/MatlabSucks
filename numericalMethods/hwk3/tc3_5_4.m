@@ -1,74 +1,54 @@
-% Two dimensional boundary value problem, solved with: equally spaced grids,
-% gauss-lobatto nodes, and exact solution. Compared
+% Poisson solver for gauss-lobatto nodes, and exact solution.
 clear
 clc
 
-% Use equal spaced points
-n = 40;
-x = linspace(-1,1,n);
-y = linspace(-1,1,n);
+n = 20;
 
-[X,Y] = meshgrid(x,y);
-
-u = sin(pi*X).*cos(pi*Y);
-% numerical approximation to 2nd partial derivative
-D2 = SecondDerivMatrix(x,n);
-D2u = D2*u;
-I = eye(n);
-
-D2x = kron(I,D2);
-D2y = kron(D2,I);
-
-u = u(:);
-
-uxx = D2x*u;
-uyy = D2y*u;
-
-uxx = reshape(uxx,n,n);
-uyy = reshape(uyy,n,n);
+method = 'Even';
+[X,Y,uzz] =  Poisson_solve(@f,n,method) 
 figure
-surf(X,Y, uxx + uyy);
-title('numerical plot with even spacing')
+surf(X,Y, uzz);
+title({'Poisson solve N=',string(n),method})
 
 
-
-
-
-% Use spectral points
-x = GLL_nodes(n-1);
-y = GLL_nodes(n-1);
-[X,Y] = meshgrid(x,y);
-u = sin(pi*X).*cos(pi*Y);
-D = DerivMatrix(x,n-1);
-D2 = D*D;
-D2u = D2*u;
-I = eye(n);
-
-D2x = kron(I,D2);
-D2y = kron(D2,I);
-
-u = u(:);
-
-uxx = D2x*u;
-uyy = D2y*u;
-
-uxx = reshape(uxx,n,n);
-uyy = reshape(uyy,n,n);
 figure
-surf(X,Y, uxx + uyy);
-title('numerical plot with uneven spacing gauss-lobatto points')
-
-
-
-
-% compare to exact solution
-figure
-u_r = -2*pi^2*sin(pi*X).*cos(pi*Y);
-surf(X,Y,u_r);
-title('actual')
-
+method = 'GLo';
+[X,Y,uzz] =  Poisson_solve(@f,n,method) 
+surf(X,Y, uzz);
+title({'Poisson solve N=',string(n),method})
 
 %%%%%%%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%%%
+
+function u = f(X,Y)
+	u = 10*sin(8*X.*(Y-1));
+end
+
+function [X,Y,uzz] =  Poisson_solve(f,N,method) 
+	if strcmp(method,'Even');
+		x = linspace(-1,1,N);
+		y = linspace(-1,1,N);
+		D2 = SecondDerivMatrix(x,N);
+	else strcmp(method,'GLo');
+		x = GLL_nodes(N-1);
+		y = GLL_nodes(N-1);
+		D = DerivMatrix(x,N-1);
+		D2 = D*D;
+	end
+	[X,Y] = meshgrid(x,y);
+	u = f(X,Y)
+	% Set boundary conditions
+	u(1,:) = 0;
+	u(end,:) = 0;
+	u(:,1) = 0;
+	u(:,end) = 0;
+	I = eye(N);
+	D2x = kron(I,D2);
+	D2y = kron(D2,I);
+	u = u(:);
+	uzz = (D2x + D2y)*u;
+	uzz = reshape(uzz,N,N);
+end
+
 
 function D = DerivMatrix(x,n)
 	% Spectral differentiation

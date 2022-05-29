@@ -4,11 +4,11 @@
 clc
 clear
 
-dt = .1;
+dt = .001;
 a = 0; % left endpoint for both t and x
 b = 20;% right endpoint for both t and x
 t = [a:dt:b];
-N=50;
+N=100;
 N_1 = N-1; % N-1, GLL nodes gives one more point than the number passed in
 x = GLL_nodes(N_1);
 x = (b-a)/2*x + (b+a)/2; % Adjust Gauss lobatto beyond the -1 +1 region
@@ -24,23 +24,20 @@ for n=1:length(t)-1
 	O(n+1,:) = O(n,:) + (k1/2+k2/2)*dt;
 end;
 
-% plot phis for when t = 0,5,10,15
-times = [0 5 10 15];
-figure
-hold on
-for time = times
-	t_i = time/dt + 1; %index with our phis
-	plot(x,O(t_i,:))
+shape = size(O);
+distance = 0;
+for n = 3:length(t)-1
+	max_val = max(O(n,:));
+ 	if max_val < .5
+		break
+ 	end
 end
-xlabel('x')
-ylabel('phi')
-title('Phi at x for with dt=.1 and N=40 using spectral differentiation')
-legend('time:'+string(times))
-hold off
+[val, idx] = max(O(n,:));
+dist = x(idx);
+sprintf('value peaks at or before x= %.2f, so I would reccommend setting this as the boundary',dist)
 
-disp('At dt=.1 and N=40 spectal differentiation is a clear winner when compared to the central differencing of 4.3')
+%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%% functions %%%%%%%%%%%%%
 function vec = f(D,O)
 	% Return next set of phis
 	v = .025;

@@ -1,14 +1,14 @@
 % Unsteady convection -- diffusion
 % dO/dt + U*dO/dx = v*D2O/Dx2
-% Use N=40 and dt = .1
+% Use N=100 and find stable dt values
 clc
 clear
 
-dt = .1;
-a = 0; % left endpoint for both t and x
-b = 20;% right endpoint for both t and x
+N=100;
+a = 0;
+b = 20;
+dt=.1; 
 t = [a:dt:b];
-N=50;
 N_1 = N-1; % N-1, GLL nodes gives one more point than the number passed in
 x = GLL_nodes(N_1);
 x = (b-a)/2*x + (b+a)/2; % Adjust Gauss lobatto beyond the -1 +1 region
@@ -18,29 +18,50 @@ O = zeros(length(t)-1,N);
 O(1,:) = initiate_phis(x);
 
 
-for n=1:length(t)-1
-	k1=f(D, O(n,:));
-        k2=f(D, O(n,:)+dt*k1);
-	O(n+1,:) = O(n,:) + (k1/2+k2/2)*dt;
-end;
-
-% plot phis for when t = 0,5,10,15
-times = [0 5 10 15];
 figure
 hold on
-for time = times
-	t_i = time/dt + 1; %index with our phis
-	plot(x,O(t_i,:))
+% overly plots with different dts to estimate stability
+dts = [1 .1 .01 .001];
+for dt = dts;
+        evals = get_eig_vals(D)';
+        X = real(evals)*dt;
+        Y = imag(evals)*dt;
+        plot(X,Y,'o');
 end
+
+% add stability plot
+relamdt=-3:0.1:1;
+imlamdt=-2:0.1:2;
+[RElamdt,IMlamdt]=meshgrid(relamdt,imlamdt);
+axis square;
+lamdt=RElamdt+i*IMlamdt;
+sig=1+lamdt+lamdt.^2/2;
+contour_levels=[1 0 0 0];
+contour(RElamdt,IMlamdt,abs(sig),contour_levels,'linewidth',4);
+xlabel('Re \lambda \Delta t');
+ylabel('Im \lambda \Delta t');
+hold off;
 xlabel('x')
 ylabel('phi')
-title('Phi at x for with dt=.1 and N=40 using spectral differentiation')
-legend('time:'+string(times))
-hold off
+title('stability plot for several values of dt')
+legend_strings = "dt: " + string(dts);
+legend(legend_strings,'location','southwest')
 
-disp('At dt=.1 and N=40 spectal differentiation is a clear winner when compared to the central differencing of 4.3')
+disp('part of dt=.01 is within the region of stability as well as much of dt=.001')
 
-%%%%%%%%%%%%%% functions %%%%%%%%%%%%%
+
+
+%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%
+function evals = get_eig_vals(D)
+        % set constants
+        v = .025;
+        U = 1;
+        % build matrix
+	D2 = D*D;
+	L = v*D2 - U*D;
+        evals = eig(L);
+end
+
 function vec = f(D,O)
 	% Return next set of phis
 	v = .025;

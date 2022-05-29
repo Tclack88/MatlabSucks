@@ -4,11 +4,11 @@
 clc
 clear
 
-dt = .1;
+dt = .001;
 a = 0; % left endpoint for both t and x
 b = 20;% right endpoint for both t and x
 t = [a:dt:b];
-N=50;
+N=100;
 N_1 = N-1; % N-1, GLL nodes gives one more point than the number passed in
 x = GLL_nodes(N_1);
 x = (b-a)/2*x + (b+a)/2; % Adjust Gauss lobatto beyond the -1 +1 region
@@ -34,13 +34,24 @@ for time = times
 end
 xlabel('x')
 ylabel('phi')
-title('Phi at x for with dt=.1 and N=40 using spectral differentiation')
+title('Phi at x for with dt=.001 and N=100 using spectral differentiation')
 legend('time:'+string(times))
 hold off
 
-disp('At dt=.1 and N=40 spectal differentiation is a clear winner when compared to the central differencing of 4.3')
 
-%%%%%%%%%%%%%% functions %%%%%%%%%%%%%
+disp('graphically, with dt=.001 the results are as expected, agreeing with 4.3')
+
+%%%%%%%%%%%% functions %%%%%%%%%%%%%%%%%
+function evals = get_eig_vals(D)
+        % set constants
+        v = .025;
+        U = 1;
+        % build matrix
+	D2 = D*D;
+	L = v*D2 - U*D;
+        evals = eig(L);
+end
+
 function vec = f(D,O)
 	% Return next set of phis
 	v = .025;

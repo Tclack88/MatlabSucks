@@ -55,7 +55,7 @@ back_sol = back_sub(L,c)
 % This agrees with the built-in tool
 L\c
 
-Uc = [U answers]; % augmented matrix to do back substitution
+Uc = [U back_sol]; % augmented matrix to do back substitution
 
 % Here's the forward sub I tried for a guassian elimination in workshop 3
 forward_sol = forward_sub(U,back_sol)

@@ -28,7 +28,7 @@ function [X,Y,uzz] =  Poisson_solve(f,N,method)
 		x = linspace(-1,1,N);
 		y = linspace(-1,1,N);
 		D2 = SecondDerivMatrix(x,N);
-	else strcmp(method,'GLo');
+    else strcmp(method,'GLo');
 		x = GLL_nodes(N-1);
 		y = GLL_nodes(N-1);
 		D = DerivMatrix(x,N-1);

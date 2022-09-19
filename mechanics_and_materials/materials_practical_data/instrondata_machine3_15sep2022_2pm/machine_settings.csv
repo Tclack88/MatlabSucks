@@ -1,7 +1,7 @@
 Specimen, Cross-Head Speed (mm/min), Initial Guage Length (mm), Final Gauge Length (mm), thickness before (mm), width before (mm), thickness after (mm), width after(mm)
-Cu annealed,50,75,84,.91,.81,13,11.67
-Al annealed (1150-T0),50,65,87.66,1.58,1.41,12.89,11.34
-Al work-hardened (5005-H34),50,65,68.87,1.62,1.55,12.83,12.59
-low carbon steel,50,65,85.72,.84,.62,12.89,11.54
+Cu annealed,10,75,84,.91,.81,13,11.67
+Al annealed (1150-T0),10,65,87.66,1.58,1.41,12.89,11.34
+Al work-hardened (5005-H34),10,65,68.87,1.62,1.55,12.83,12.59
+low carbon steel,10,65,85.72,.84,.62,12.89,11.54
 LDPE,200,65,313,3.22,1.42,13.09,5.8
-LDPE (cold-drawn),200,65,65.4,1.42,1.49,5.8,5.78
+LDPE (cold-drawn),10,65,65.4,1.42,1.49,5.8,5.78

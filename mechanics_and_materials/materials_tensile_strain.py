@@ -66,12 +66,40 @@ for label in df_labels:
 
 al_df
 
-ldpe_df.plot('strain_calc','stress')
+
+
+def find_neighbor(col, val):
+  # returns an row with a col very close to the given value
+  for i,value in enumerate(col):
+    if value >= val:
+      break
+  return i
+
+def youngs_modulus(dat, low, high):
+  # Given dataframat (dat), and two values for STRESS (low and high) obtained from inspection
+  # this will return the slope, i.e. young's modulus
+  if 'strain' in dat:
+    strain = 'strain'
+  else:
+    strain = 'strain_calc'
+  row1 = find_neighbor(dat.stress, low) # get index of column containing ~ low estimate
+  row2 = find_neighbor(dat.stress, high) # get index of column containing ~ high estimate
+  rise = dat.loc[row2,:].stress - dat.loc[row1,:].stress
+  run = dat.loc[row2,:][strain] - dat.loc[row1,:][strain]
+  E = rise/run # young's modulus = slope
+  # get y intercept
+  b = dat.loc[row2,:].stress - E*(dat.loc[row2,:][strain]) # b = y - mx
+  # return E, b
+  return E
+
+material_dfs_labels = 'al_df al_hard_df cu_df ldpe_df ldpe_cold_df steel_df'.split()
+low_high_estimates = [[600,2500] , [200,600], [1000,2500], [20,100], [50,150], [1000,4000]]
+low_high_df = dict(zip(material_dfs_labels, low_high_estimates))
 
 sb.set_style("whitegrid")
 for label in df_labels:
-  plt.figure()
-  # plt.figure(figsize=(10,7))
+  # plt.figure();
+  plt.figure(figsize=(10,7))
   df = df_labels[label]
   spec = ('_'.join(str(label).split('_')[:-1]))
   material_name =  data_df.specimen[data_df.spec == spec].iloc[0]
@@ -84,6 +112,9 @@ for label in df_labels:
   scatterplot.set(title=f'stress-strain of {material_name}',xlabel='Strain (mm/mm)', ylabel='Engineering Stress (MPa)')
   plt.legend(labels=['calculated strain','extensometer strain'], loc='lower right')
   plt.show()
+  low, high = low_high_df[label]
+  E = youngs_modulus(df, low, high)
+  print(f"Young's modulus for {material_name}:\n\t{E}")
 
 for label in df_labels:
   plt.figure()
@@ -92,5 +123,5 @@ for label in df_labels:
   material_name =  data_df.specimen[data_df.spec == spec].iloc[0]
   print(material_name)
 
-
+ldpe_df
 

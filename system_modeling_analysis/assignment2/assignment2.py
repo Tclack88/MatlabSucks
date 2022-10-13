@@ -14,6 +14,7 @@ def highlight(word):
 
 
 showall=0 # show all print statements
+showall=1
 
 s = sym.Symbol('s')
 I = sym.Symbol('I')

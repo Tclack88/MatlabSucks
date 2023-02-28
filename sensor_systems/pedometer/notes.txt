@@ -1,0 +1,3 @@
+300 paces in 2:33 (153 seconds)
+
+.51 seconds/pace => sample at .255 seconds/sample (3.92 samples/sec ~ 4 samples/sec)

@@ -1,0 +1,4 @@
+filename = '200steps_sensorlog_20230228_113308.mat';
+raw_dat = load(filename);
+struct2table(raw_dat)
+writetimetable(filename,'200steps.csv');

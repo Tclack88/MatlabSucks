@@ -1,5 +1,5 @@
 filename = '100step_sensorlog_20230302_100113.mat';
-%filename = 'Background_sensorlog_20230303_180709.mat'
+%filename = 'Background_sensorlog_20230307_110521.mat'
 raw_dat = load(filename);
 dat = struct2table(raw_dat);
 T = splitvars(dat);
@@ -10,7 +10,7 @@ x = T.X;
 t = T.Acceleration_Timestamp;
 
 Y = fft(x);
-L = seconds(time(end) - time(1));
+L = seconds(t(end) - t(1));
 Fs = 4;
 T = 1/Fs;
 

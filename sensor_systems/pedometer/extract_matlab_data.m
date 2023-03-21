@@ -7,13 +7,13 @@ filename = '/home/tclack/Downloads/180_run_sensorlog_20230321_112548.mat'
 filename = '/home/tclack/Downloads/50_hand_slow_sensorlog_20230321_113224.mat'
 % filename = '/home/tclack/Downloads/50_mix_sensorlog_20230318_130007.mat'
 filename = '/home/tclack/Downloads/60_pocket_slow_sensorlog_20230321_112311.mat'
-ilename = '/home/tclack/Downloads/70_pause_demo_sensorlog_20230321_112801.mat'
-filename = '/home/tclack/Downloads/80_run_hand_sensorlog_20230321_114218.mat'
+filename = '/home/tclack/Downloads/70_pause_demo_sensorlog_20230321_112801.mat'
+% filename = '/home/tclack/Downloads/80_run_hand_sensorlog_20230321_114218.mat'
 
 raw_dat = load(filename);
 dat = struct2table(raw_dat);
 T = splitvars(dat);
-writetable(T ,'80_run_hand.csv');
+writetable(T ,'70_pause_demo.csv');
 %writetable(T ,'100steps.csv');
 %writetable(T ,'background.csv');
 

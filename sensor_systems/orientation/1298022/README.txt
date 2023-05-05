@@ -1,6 +1,0 @@
-
-# This collected data is 90 degrees CCW, 90 degrees CW. 90 degrees CW and another 90 CW
- (for a total of 180).
-# I ONLY HAVE THE HEADINGS RIGHT NOW, I WAS UNABLE TO FIGURE OUT THE KALMAN FILTERING
-# TO PUT IT ON A PHYSICAL UP DOWN LEFT RIGHT DIRECTION
-

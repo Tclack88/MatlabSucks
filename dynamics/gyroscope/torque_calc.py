@@ -24,7 +24,13 @@ T1 = (g*(m2*large_CW + m3*small_CW))
 r1o = .254/2
 r1i = .0093/2
 L =  (T1-T2)/.1
-w = L/(m1*(r1o-r1i)**2/2)
-print(w)
+print(L)
+I = (m1*(r1o-r1i)**2/2)
+w = L/I
+print(I)
+I = (m1*(r1o**2-r1i**2)/2)
+#w = L/I
+#print(I)
+#print("w:",w)
 
 
